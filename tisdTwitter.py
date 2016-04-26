@@ -1,17 +1,27 @@
 import tweepy
 
-consumer_key = raw_input("Introduzca el consumer_key >>> ")
-consumer_secret = raw_input("Introduzca el consumer_secret >>> ")
+# == OAuth Authentication ==
+#
+# This mode of authentication is the new preferred way
+# of authenticating with Twitter.
+
+# The consumer keys can be found on your application's Details
+# page located at https://dev.twitter.com/apps (under "OAuth settings")
+consumer_key=""
+consumer_secret=""
+
+# The access tokens can be found on your applications's Details
+# page located at https://dev.twitter.com/apps (located
+# under "Your access token")
+access_token=""
+access_token_secret=""
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.secure = True
+auth.set_access_token(access_token, access_token_secret)
 
-# Ahora necesitamos el access token para los permmisos
-redirect_url = auth.get_authorization_url()
-print "Puede obtener el access token en este link >>> ", redirect_url
-verifier = raw_input("Introduzca el codigo verificador: ")
+api = tweepy.API(auth)
 
-# Obtenemos y pasamos al objeto 'auth' el token con el codigo antes provisto
-auth.get_access_token(verifier)
-
-# Obtenemos un objeto api que necesitaremos para hacer los requests a Twitter
-api = tweepy.API(auth)   # Pasando el objeto 'auth' como parametro
+# If the authentication was successful, you should
+# see the name of the account print out
+print(api.me().name)
