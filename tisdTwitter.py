@@ -24,4 +24,7 @@ api = tweepy.API(auth)
 
 # If the authentication was successful, you should
 # see the name of the account print out
-print(api.me().name)
+print('Bienvenido ' + api.me().name)
+print('Escriba un tweet a continuacion: ')
+text = raw_input()
+api.update_status(text)
